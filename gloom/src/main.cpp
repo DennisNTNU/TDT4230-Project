@@ -42,7 +42,7 @@ GLFWwindow* initialise()
     GLFWwindow* window = glfwCreateWindow(windowWidth,
                                           windowHeight,
                                           windowTitle.c_str(),
-                                          nullptr,
+                                          nullptr, //glfwGetPrimaryMonitor(),
                                           nullptr);
 
     // Ensure the window is set up correctly
@@ -55,6 +55,9 @@ GLFWwindow* initialise()
 
     // Let the window be the current OpenGL context and initialise glad
     glfwMakeContextCurrent(window);
+	glfwSwapInterval(1); // if monitor refresh rate is 60, makes window run at around 60fps
+	
+
     gladLoadGL();
 
     // Print various OpenGL information to stdout
@@ -69,6 +72,7 @@ GLFWwindow* initialise()
 
 int main(int argc, char* argb[])
 {
+	if (argc < -1) {argb[0][0] = 'a';} // just to get rid of a warning
     // Initialise window using GLFW
     GLFWwindow* window = initialise();
 
