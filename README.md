@@ -1,11 +1,11 @@
-=====
-TDT4230 Project
-=====
 
-Repository containing my project for the course TDT4230, about earth and stars rendering. More information about compiling for windows and dependencies (submodules) are found in the readme for https://github.com/aleksaro/gloom.
+# TDT4230 Project
 
-Download
-~~~~~~~~
+![preview](final.png)
+
+Repository containing my project for the course TDT4230, about earth and stars rendering. More information about compiling for windows and dependencies (submodules) are found in the readme for base project: https://github.com/aleksaro/gloom.
+
+## Download
 
 .. code-block:: bash
 
@@ -18,8 +18,7 @@ If you have already cloned the repository and missed the ``--recurse-submodules`
   git submodule update --init
 
 
-Compilation on Linux
-~~~~~~~~~~~
+## Compilation on Linux
 
 Navigate into the build folder
 
@@ -39,8 +38,7 @@ and run executable
 
 
 
-High resolution textures
-~~~~~~~~~~~~~~~~~~~~~~~~
+### High resolution textures
 
 High resolution textures are not included in the repository due to file size (about 20MB each for 8K textures). They can be downloaded from http://www.shadedrelief.com/natural3/index.html. Run with
 
@@ -48,8 +46,7 @@ High resolution textures are not included in the repository due to file size (ab
 
 to load high resolution textures instead of the standard ones.
 
-Star catalog
-~~~~~~~~~~~~
+### Star catalog
 
 The star catalog is from http://astronexus.com/node/34
 
@@ -59,13 +56,13 @@ TODO: they are also hosted on github, add it as submodule.
 
 
 
-.. Links
+#### Links
 
-.. _Glitter: https://github.com/Polytonic/Glitter
-.. _NTNU: https://www.ntnu.edu/
-.. _glad: https://github.com/Dav1dde/glad
-.. _glfw: https://github.com/glfw/glfw
-.. _glm: https://github.com/g-truc/glm
-.. _stb: https://github.com/nothings/stb
-.. _CMake: https://cmake.org/
-.. _repository wiki: https://github.com/senbon/gloom/wiki
+Glitter: https://github.com/Polytonic/Glitter
+NTNU: https://www.ntnu.edu/
+glad: https://github.com/Dav1dde/glad
+glfw: https://github.com/glfw/glfw
+glm: https://github.com/g-truc/glm
+stb: https://github.com/nothings/stb
+CMake: https://cmake.org/
+gloom repository wiki: https://github.com/senbon/gloom/wiki
