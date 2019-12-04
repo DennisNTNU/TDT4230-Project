@@ -4,6 +4,23 @@
 
 #include "SphereGeometry.h"
 
+Earth::Earth()
+{
+	_shader = 0;
+	_tex1_day.id = -1;
+	_tex2_night.id = -1;
+	_modelMatrix = glm::mat4(1.0);
+	initVAOSphere(&_vaoID, &_indexCount, 48, 64, 6378.0);
+
+	_orbit._time = 0.0;
+	_orbit._trueAnomaly = 0.0;
+	_orbit._semiMajorAxis = 149598023.0;
+	_orbit._eccentricity = 0.0167086;
+	_orbit._centralMass = 1.98855e30;
+	_orbit.orientOrbit(0.0, 0.0, 3.98660533);
+
+}
+
 Earth::Earth(Gloom::Shader* shader, GLTexture texture)
 {
 	_shader = shader;

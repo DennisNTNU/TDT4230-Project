@@ -2,6 +2,8 @@
 #include "gloom/gloom.hpp"
 #include "program.hpp"
 
+#include <string.h>
+
 // System headers
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -70,14 +72,20 @@ GLFWwindow* initialise()
 }
 
 
-int main(int argc, char* argb[])
+int main(int argc, char* argv[])
 {
-	if (argc < -1) {argb[0][0] = 'a';} // just to get rid of a warning
     // Initialise window using GLFW
     GLFWwindow* window = initialise();
 
     // Run an OpenGL application using this window
-    runProgram(window);
+    if (argc >= 2 && strcmp(argv[1], "hires") == 0)
+    {
+        runProgram(window, 1);
+    }
+    else
+    {
+        runProgram(window, 0);
+    }
 
     // Terminate GLFW (no need to call glfwDestroyWindow)
     glfwTerminate();

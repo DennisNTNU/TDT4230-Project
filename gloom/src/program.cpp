@@ -96,7 +96,7 @@ void initOpenGLSettings(GLFWwindow* window)
 
 }
 
-void runProgram(GLFWwindow* window)
+void runProgram(GLFWwindow* window, int hires)
 {
 	initOpenGLSettings(window);
 
@@ -130,29 +130,45 @@ void runProgram(GLFWwindow* window)
 	glfwGetCursorPos(window, &(camera.oldMousePosX), &(camera.oldMousePosY));
 	camera.calcCamMatrix();
 
-	printf("Loading Textures ...\n");
+	printf("Loading Textures ...\n"); // and setting up models/meshes/geometry
+
+	Earth earth;
+
+	if (hires)
+	{
+		printf("\t Earth diffuse ...\n");
+		earth = Earth(&earthShader, textureManager.getTexture("../gloom/textures/hires/earth_8k.png"));
+
+		printf("\t Earth diffuse night ...\n");
+		earth.addNightsideTexture(textureManager.getTexture("../gloom/textures/hires/earth_night_hi_res.png"));
+
+		printf("\t Earth clouds ...\n");
+		earth.addCloudTexture(textureManager.getTexture("../gloom/textures/hires/clouds_8k.png"));
+
+		printf("\t Earth specular ...\n");
+		earth.addWaterMaskTexture(textureManager.getTexture("../gloom/textures/hires/water_8k.png"));
+		
+		printf("\t Earth heightmap ...\n");
+		earth.addHeightTexture(textureManager.getTexture("../gloom/textures/hires/earth_elev_8k.png"));
+	}
+	else
+	{
+		printf("\t Earth diffuse ...\n");
+		earth = Earth(&earthShader, textureManager.getTexture("../gloom/textures/earth.png"));
+
+		printf("\t Earth diffuse night ...\n");
+		earth.addNightsideTexture(textureManager.getTexture("../gloom/textures/earth_night.png"));
+
+		printf("\t Earth clouds ...\n");
+		earth.addCloudTexture(textureManager.getTexture("../gloom/textures/clouds.png"));
+
+		printf("\t Earth specular ...\n");
+		earth.addWaterMaskTexture(textureManager.getTexture("../gloom/textures/water.png"));
+
+		printf("\t Earth heightmap ...\n");
+		earth.addHeightTexture(textureManager.getTexture("../gloom/textures/earth_elev.png"));
+	}
 	
-	// Setting up models/meshes/geometry
-
-	printf("\t Earth diffuse ...\n");
-	//Earth earth(&earthShader, textureManager.getTexture("../gloom/textures/earth.png"));
-	Earth earth(&earthShader, textureManager.getTexture("../gloom/textures/hires/earth_8k.png"));
-
-	printf("\t Earth diffuse night ...\n");
-	//earth.addNightsideTexture(textureManager.getTexture("../gloom/textures/earth_night.png"));
-	earth.addNightsideTexture(textureManager.getTexture("../gloom/textures/hires/earth_night_hi_res.png"));
-
-	printf("\t Earth clouds ...\n");
-	//earth.addCloudTexture(textureManager.getTexture("../gloom/textures/clouds.png"));
-	earth.addCloudTexture(textureManager.getTexture("../gloom/textures/hires/clouds_8k.png"));
-
-	printf("\t Earth specular ...\n");
-	//earth.addWaterMaskTexture(textureManager.getTexture("../gloom/textures/water.png"));
-	earth.addWaterMaskTexture(textureManager.getTexture("../gloom/textures/hires/water_8k.png"));
-
-	printf("\t Earth heightmap ...\n");
-	earth.addHeightTexture(textureManager.getTexture("../gloom/textures/earth_elev.png"));
-	//earth.addHeightTexture(textureManager.getTexture("../gloom/textures/earth_elev_8k.png"));
 
 	CoordinateSystem ecf(&lineShader, 130, 130, 130);
 	Atmosphere atmosphere(&atmosphereShader);
@@ -202,7 +218,7 @@ void runProgram(GLFWwindow* window)
 			if (timestamp - timestamp2 > 0.8)
 			{
 				timestamp2 = timestamp;
-				glfwSetWindowTitle(window, ("Orbit's 2U Cubesat Visualization - Fps: " + std::to_string(1/dt)).c_str());
+				glfwSetWindowTitle(window, ("TDT4230 Project - Fps: " + std::to_string(1/dt)).c_str());
 
 				/*
 				std::cout << "q\t" << satellite._rotDyn.quaternion[0] << " ; "<< satellite._rotDyn.quaternion[1] << " ; "<< satellite._rotDyn.quaternion[2] << " ; "<< satellite._rotDyn.quaternion[3] << "\n";
@@ -323,8 +339,6 @@ void runProgram(GLFWwindow* window)
 
 			camera.calcCamMatrix();
 			glm::mat4 perspView = camera.getCameraMatrix();
-			//glm::mat4 viewMatrix = camera.getViewMatrix();
-			//glm::mat4 projectionMatrix = camera.getProjectionMatrix();
 
 			glm::vec3 camPos = camera.getPosition();
 			inputHelperStruct.earthDistance = glm::length(camPos);
@@ -345,13 +359,16 @@ void runProgram(GLFWwindow* window)
 			earth.draw(&perspView, &sunPos, &camPos);
 			satellite.draw(&perspView, &sunPos, inputHelperStruct.showOrbitDetails);
 
+
 			if (inputHelperStruct.showOrbitDetails)
 			{
 				ecf.draw(&perspView);
 			}
 			else
 			{
-				// atmosphere.draw(&viewMatrix, &projectionMatrix, &camPos, &sunPos, &earthPos);
+				glm::mat4 viewMatrix = camera.getViewMatrix();
+				glm::mat4 projectionMatrix = camera.getProjectionMatrix();
+				atmosphere.draw(&viewMatrix, &projectionMatrix, &camPos, &sunPos, &earthPos);
 			}
 
 			// Flip buffers

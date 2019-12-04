@@ -7,6 +7,7 @@
 class Earth
 {
 public:
+	Earth();
 	Earth(Gloom::Shader* shader, GLTexture texture);
 	~Earth();
 

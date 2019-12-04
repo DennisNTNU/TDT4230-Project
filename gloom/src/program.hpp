@@ -11,7 +11,7 @@
 void initOpenGLSettings(GLFWwindow* window);
 
 // Main OpenGL program
-void runProgram(GLFWwindow* window);
+void runProgram(GLFWwindow* window, int hires);
 
 
 // Checks for whether an OpenGL error occurred. If one did,
