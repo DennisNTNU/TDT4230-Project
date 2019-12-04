@@ -1,96 +1,62 @@
 =====
-gloom
+TDT4230 Project
 =====
 
-A minimalistic boilerplate for OpenGL with C++ derived from `Glitter`_. Its intended use is to get smaller OpenGL projects quickly up and running for the graphics courses at `NTNU`_.
-
-The following libraries are included with this project:
-
-+---------+---------------------------------------+
-| Library | Function                              |
-+=========+=======================================+
-| `glad`_ | OpenGL function loader                |
-+---------+---------------------------------------+
-| `glfw`_ | Window creation and input handler     |
-+---------+---------------------------------------+
-| `glm`_  | OpenGL mathematics                    |
-+---------+---------------------------------------+
-| `stb`_  | Various libraries, e.g. image loading |
-+---------+---------------------------------------+
-
-Additional functionality can be added by altering ``CMakeLists.txt``.
-
-
-Dependencies
-============
-
-* `CMake`_ (v.3.*) is used to generate platform-specific makefiles and workspaces.
-
-Please refer to the individual library repositories for more information about additional dependencies.
-
-
-Getting started
-===============
+Repository containing my project for the course TDT4230, about earth and stars rendering. More information about compiling for windows and dependencies (submodules) are found in the readme for https://github.com/aleksaro/gloom.
 
 Download
---------
-
-The project and all third-party libraries can be downloaded by cloning this repository with the ``--recursive`` flag.
+~~~~~~~~
 
 .. code-block:: bash
 
-  git clone --recursive https://github.com/senbon/gloom.git
+  git clone --recurse-submodules https://github.com/senbon/gloom.git
 
-If you have already cloned the repository and missed the ``--recursive`` flag, then the following grabs all dependencies.
+If you have already cloned the repository and missed the ``--recurse-submodules`` flag, then the following grabs all dependencies.
 
 .. code-block:: bash
 
   git submodule update --init
 
 
-Compilation
------------
+Compilation on Linux
+~~~~~~~~~~~
 
-Linux (command-line)
-~~~~~~~~~~~~~~~~~~~~
+Navigate into the build folder
 
-With all dependencies installed, compiling the project is as easy as running CMake followed by the ``make`` command.
+``cd TDT4230-Project/build``
 
-.. code-block:: bash
+Generate UNIX Makefile (point CMake to CMakeLists.txt)
 
-  # Change into the directory where you want your makefiles
-  cd ./gloom/build
+``cmake ..``
 
-  # Generate UNIX Makefile (point CMake to CMakeLists.txt)
-  cmake ..
+Build and link all files
 
-  # Execute make command
-  make
+``make``
 
-  # Run executable
-  ./gloom/gloom
+and run executable
 
-Specific generators can also be specified with CMake if you want to create workspaces for an IDE, for example:
-
-.. code-block::
-
-  cmake -G "CodeBlocks - Unix Makefiles"
+``./gloom/gloom``
 
 
-Windows (cmake-gui)
-~~~~~~~~~~~~~~~~~~~
 
-1. Set the source code file to the root directory containing ``CMakeLists.txt``
-2. Binaries can be built in the directory of your choice, e.g. ``gloom\build\``
-3. Click the configure button and select which generator you would like to use
-4. Click the generate button
-5. If your generator is an IDE such as Visual Studio, then open up the newly created .sln file and build ``ALL_BUILD``. After this you might want to set ``gloom`` as you StartUp Project.
+High resolution textures
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-Documentation
-=============
+High resolution textures are not included in the repository due to file size (about 20MB each for 8K textures). They can be downloaded from http://www.shadedrelief.com/natural3/index.html. Run with
 
-The full documentation can be found on the `repository wiki`_.
-Among other things, the wiki includes information on how to use the shader and camera class bundled with gloom.
+``./gloom/gloom hires``
+
+to load high resolution textures instead of the standard ones.
+
+Star catalog
+~~~~~~~~~~~~
+
+The star catalog is from http://astronexus.com/node/34
+
+TODO: they are also hosted on github, add it as submodule.
+
+
+
 
 
 .. Links
